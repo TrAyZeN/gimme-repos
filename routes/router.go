@@ -48,9 +48,13 @@ func getUnknown(c *gin.Context) {
 		"order": "desc",
 	}
 
-	r := parseResponse(request(utils.BuildRequestString(q), c), c)
-	if r != nil {
-		c.JSON(http.StatusOK, r)
+	res, err := request(utils.BuildRequestString(q))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err,
+		})
+	} else {
+		c.JSON(http.StatusOK, res)
 	}
 }
 
@@ -71,42 +75,42 @@ func getMaybeknown(c *gin.Context) {
 		"order": "desc",
 	}
 
-	r := parseResponse(request(utils.BuildRequestString(q), c), c)
-	if r != nil {
-		c.JSON(http.StatusOK, r)
-	}
-}
-
-func request(url string, c *gin.Context) *http.Response {
-	res, err := http.Get(url)
+	res, err := request(utils.BuildRequestString(q))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
 		})
-		return nil;
+	} else {
+		c.JSON(http.StatusOK, res)
 	}
-
-	return res;
 }
 
-func parseResponse(res *http.Response, c *gin.Context) map[string]interface{} {
+func request(url string) (models.Response, error) {
+	res, err := http.Get(url)
+	if err != nil {
+		return models.Response{}, err
+	}
+
+	r, err := parseResponse(res)
+	if err != nil {
+		return models.Response{}, err
+	}
+
+	return r, nil
+}
+
+func parseResponse(res *http.Response) (models.Response, error) {
 	bodyBytes, err := ioutil.ReadAll(res.Body)
 	res.Body.Close()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err,
-		})
-		return nil;
+		return models.Response{}, err
 	}
 
 	var t models.Response
 	err = json.Unmarshal([]byte(bodyBytes), &t)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err,
-		})
-		return nil;
+		return models.Response{}, err
 	}
 
-	return t.ToMap();
+	return t, nil
 }
