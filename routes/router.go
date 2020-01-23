@@ -1,7 +1,6 @@
 package routes
 
 import (
-	// "fmt"
 	"strconv"
 
 	"math/rand"
@@ -101,7 +100,7 @@ func parseResponse(res *http.Response, c *gin.Context) map[string]interface{} {
 	}
 
 	var t models.Response
-	json.Unmarshal([]byte(bodyBytes), &t)
+	err = json.Unmarshal([]byte(bodyBytes), &t)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
