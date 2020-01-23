@@ -20,8 +20,8 @@ import (
 func createRouter() *gin.Engine {
 	router := gin.Default()
 
-	router.GET("/unknown", get_unknown)
-	router.GET("/maybeknown", get_maybeknown)
+	router.GET("/unknown", getUnknown)
+	router.GET("/maybeknown", getMaybeknown)
 
 	return router
 }
@@ -31,20 +31,20 @@ func Listen(port int) {
 	router.Run(":" + strconv.Itoa(port))
 }
 
-func get_unknown(c *gin.Context) {
+func getUnknown(c *gin.Context) {
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
-	stars_l := rng.Intn(20)
-	stars_u := 20 + rng.Intn(200)
+	starsLowerBound := rng.Intn(20)
+	starsUpperBound := 20 + rng.Intn(200)
 
-	request_query := c.Request.URL.Query()
+	requestQuery := c.Request.URL.Query()
 
-	lang_param := ""
-	if request_query["language"] != nil {
-		lang_param = "language:" + request_query["language"][0] + "+"
+	langParam := ""
+	if requestQuery["language"] != nil {
+		langParam = "language:" + requestQuery["language"][0] + "+"
 	}
 
 	q := utils.Query{
-		"q": lang_param + "stars:" + strconv.Itoa(stars_l) + ".." + strconv.Itoa(stars_u) + "+is:public",
+		"q": langParam + "stars:" + strconv.Itoa(starsLowerBound) + ".." + strconv.Itoa(starsUpperBound) + "+is:public",
 		"sort": "updated",
 		"order": "desc",
 	}
@@ -55,19 +55,19 @@ func get_unknown(c *gin.Context) {
 	}
 }
 
-func get_maybeknown(c *gin.Context) {
+func getMaybeknown(c *gin.Context) {
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	stars := 100 + rng.Intn(150)
 
-	request_query := c.Request.URL.Query()
+	requestQuery := c.Request.URL.Query()
 
-	lang_param := ""
-	if request_query["language"] != nil {
-		lang_param = "language:" + request_query["language"][0] + "+"
+	langParam := ""
+	if requestQuery["language"] != nil {
+		langParam = "language:" + requestQuery["language"][0] + "+"
 	}
 
 	q := utils.Query{
-		"q": lang_param + "stars:>" + strconv.Itoa(stars) + "+is:public",
+		"q": langParam + "stars:>" + strconv.Itoa(stars) + "+is:public",
 		"sort": "updated",
 		"order": "desc",
 	}
