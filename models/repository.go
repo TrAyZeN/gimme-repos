@@ -11,17 +11,3 @@ type Repository struct {
 	Forks            int    `json:"forks"`
 	Open_issues      int    `json:"open_issues"`
 }
-
-func (r Repository) ToMap() map[string]interface{} {
-	return map[string]interface{} {
-		"name": r.Name,
-		"owner": r.Owner.ToMap(),
-		"html_url": r.HtmlUrl,
-		"description": r.Description,
-		"size": r.Size,
-		"stargazers_count": r.Stargazers_count,
-		"language": r.Language,
-		"forks": r.Forks,
-		"open_issues": r.Open_issues,
-	};
-}
