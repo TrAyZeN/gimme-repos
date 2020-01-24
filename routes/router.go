@@ -25,9 +25,9 @@ func createRouter() *gin.Engine {
 	return router
 }
 
-func Listen(port int) {
+func Listen(port string) {
 	router := createRouter()
-	router.Run(":" + strconv.Itoa(port))
+	router.Run(":" + port)
 }
 
 func getUnknown(c *gin.Context) {
