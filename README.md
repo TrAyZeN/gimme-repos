@@ -30,7 +30,7 @@ GET /unknown
 ```
 
 ### Maybe known repositories
-Repositories with more thant 100 stars.
+Repositories with more than 100 stars.
 ```
 GET /maybeknown
 ```
