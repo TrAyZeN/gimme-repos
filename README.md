@@ -12,6 +12,7 @@ parameters so that you discover unknown repositories.
 
 ## Routes
 Parameters available for all routes:
+
 | Name       | Type      | Description                               |
 |------------|-----------|-------------------------------------------|
 | `language` | `string`  | The main language used in this repository |
