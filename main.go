@@ -12,6 +12,6 @@ func main() {
 	if p != "" {
 		routes.Listen(p)
 	} else {
-		routes.Listen("3001")
+		routes.Listen("3000")
 	}
 }
