@@ -8,7 +8,7 @@ import (
 	"github.com/TrAyZeN/gimme-repos/utils"
 )
 
-func getMaybeknown(c *gin.Context) {
+func getKnown(c *gin.Context) {
 	requestQuery := c.Request.URL.Query()
 
 	langParam := ""
@@ -17,7 +17,7 @@ func getMaybeknown(c *gin.Context) {
 	}
 
 	q := utils.Query{
-		"q": langParam + "stars:100..1000+is:public",
+		"q": langParam + "stars:>1000+is:public",
 		"sort": "updated",
 		"order": "desc",
 	}

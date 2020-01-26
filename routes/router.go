@@ -21,9 +21,11 @@ func createRouter() *gin.Engine {
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
 	})
 
-	router.GET("reallyunknown", getReallyunknown)
+	router.GET("/", getRoot)
+	router.GET("/reallyunknown", getReallyunknown)
 	router.GET("/unknown", getUnknown)
 	router.GET("/maybeknown", getMaybeknown)
+	router.GET("/known", getKnown)
 
 	return router
 }

@@ -30,9 +30,15 @@ GET /unknown
 ```
 
 ### Maybe known repositories
-Repositories with more than 100 stars.
+Repositories between 100 and 1000 stars.
 ```
 GET /maybeknown
+```
+
+### Known repositories
+Repositories with more than 1000 stars.
+```
+GET /known
 ```
 
 ## Sample response
@@ -50,7 +56,7 @@ GET /maybeknown
                 "description": "An API that lets you discover unknown GitHub repositories",
                 "size": 360,
                 "stargazers_count": 1337,
-                "language": "Go",
+                "language": "go",
                 "forks": 42,
                 "open_issues": 314
             }
